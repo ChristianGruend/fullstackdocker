@@ -1,0 +1,32 @@
+version: "3.7"
+
+services: 
+  mongodb:
+    image: mongo
+    ports: 
+      - 27017:27017
+
+  backend: 
+    build: 
+      context: ./backend
+      dockerfile: dockerfilebackend
+    ports: 
+      - 80:80
+    volumes: 
+      # - logs:/app/logs
+      - ./backend:/app
+    depends_on:
+      - mongodb
+
+  frontend:
+    build: 
+      context: ./frontend
+    ports: 
+      - 3000:3000
+    tty: true
+    stdin_open: true
+    depends_on: 
+      - backend
+
+
+
