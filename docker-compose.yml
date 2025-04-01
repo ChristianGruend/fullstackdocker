@@ -1,32 +1,64 @@
-version: "3.7"
+version: '3.8'
 
-services: 
+services:
   mongodb:
-    image: mongo
-    ports: 
+    image: 'mongo'
+    ports:
       - 27017:27017
+    
 
-  backend: 
-    build: 
-      context: ./backend
-      dockerfile: dockerfilebackend
-    ports: 
-      - 80:80
-    volumes: 
-      # - logs:/app/logs
-      - ./backend:/app
+  backend:
+    build: ./backend
+
+    ports:
+      - '80:80'
     depends_on:
       - mongodb
 
   frontend:
-    build: 
-      context: ./frontend
-    ports: 
+    build: ./frontend
+
+    ports:
       - 3000:3000
     tty: true
     stdin_open: true
-    depends_on: 
+    depends_on:
       - backend
 
 
 
+
+
+# version: "3.8"
+# services:
+#   mongodb:
+    # image: 'mongo'
+    # volumes: 
+    #   - data:/data/db
+
+    # env_file: 
+    #   - ./env/mongo.env
+  #   ports:
+  #    - 27017:27017
+
+  # backend:
+  #   build: ./backend
+  #   ports:
+  #     - '80:80'
+  #   depends_on:
+  #     - mongodb
+  # frontend:
+  #   build: ./frontend
+  #   ports: 
+  #     - '3000:3000'
+    # volumes: 
+    #   - ./frontend/src:/app/src
+    # stdin_open: true
+    # tty: true
+    # depends_on: 
+      # - backend
+
+  # volumes: 
+  #   data:
+  #   logs:
+# Fixed!What is this?Thanks a lot.
